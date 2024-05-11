@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(JSON_ImplicitConversions OFF) # deactivate implicit type conversion
 
-project(demo_package)
+project(rosout_filter)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic -Werror)
@@ -12,19 +12,17 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(nlohmann_json REQUIRED)  # JSON library
 find_package(rclcpp REQUIRED)
-find_package(interfaces REQUIRED)
-find_package(common_package REQUIRED)
+find_package(rcl_interfaces REQUIRED)
 
 include_directories(include)
 
-add_executable(demo_node src/main.cpp)
-ament_target_dependencies(demo_node rclcpp interfaces common_package nlohmann_json)
+add_executable(rosout_filter src/main.cpp)
+ament_target_dependencies(rosout_filter rclcpp rcl_interfaces)
 
-install (TARGETS
-  demo_node
-  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS
+        rosout_filter
+        DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
